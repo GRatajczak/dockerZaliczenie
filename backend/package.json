@@ -1,0 +1,25 @@
+{
+	"name": "zaliczenie",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "cross-env NODE_ENV=production node app.js",
+		"dev": "cross-env NODE_ENV=development nodemon app.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": ""
+	},
+	"author": "Grzegorz Ratajczak",
+	"license": "ISC",
+	"dependencies": {
+		"cors": "^2.8.5",
+		"cross-env": "^7.0.2",
+		"dotenv": "^8.2.0",
+		"express": "^4.17.1",
+		"mongodb": "^3.6.0",
+		"mongoose": "^5.10.3",
+		"socket.io": "^2.3.0"
+	}
+}
