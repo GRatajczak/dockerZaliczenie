@@ -1,21 +1,73 @@
 const express = require('express');
 const router = express.Router();
+const Note = require('../models/Note');
 
 
 router.post('/',(req, res) => {
-	res.send('working');
+	const text = req.body.text;
+	const title = req.body.title;
+	const author = req.body.author;
+	if (!text || text.trim().length === 0) {
+		console.log('INVALID INPUT - NO TEXT');
+		return res.status(422).json({ message: 'Invalid note text.' });
+	}
+	try {
+		const note =  Note.create({
+			text: text,
+			title: title,
+			author: author
+		});
+		res.status(201).json({ message: 'note saved'});
+		console.log('STORED NEW NOTE');
+	} catch (err) {
+		console.error('ERROR FETCHING NOTES');
+		console.error(err.message);
+		res.status(500).json({ message: 'Failed to save note.' });
+	}
+
 })
-router.delete('/',(req, res) => {
-	res.send('working');
+router.delete('/:id',(req, res) => {
+	try {
+		Note.deleteOne({ _id: req.params.id })
+		  .exec()
+		  .then(()=> {
+			  res.status(200).json({ message: 'Deleted note!' });
+			  console.log('DELETED NOTE');
+
+		  })
+	} catch (err) {
+		console.error('ERROR FETCHING NOTES');
+		console.error(err.message);
+		res.status(500).json({ message: 'Failed to delete note.' });
+	}
 })
+
 router.get('/:id',(req, res) => {
-	res.send('working');
+	try {
+		Note.find({ _id: req.params.id })
+			.exec()
+			.then(docs => {
+				res.status(200).json(docs);
+			})
+	} catch (err) {
+		console.error('ERROR FETCHING GOALS');
+		console.error(err.message);
+		res.status(500).json({ message: 'Failed to load goals.' });
+	}
 })
+
 router.get('/',(req, res) => {
-	res.send([
-    {id: 1, title: 'Notatka nr 1', body: '<p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis <b>et quasi architecto beatae vitae</b> dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur</p>'},
-    {id: 2, title: 'Notatka nr 2', body: '<p>Sdolores eos qui ratione <b>voluptatem sequi nesciunt</b>. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam</p>'},
-  ]);
+	try {
+		Note.find({})
+			.exec()
+			.then(docs => {
+				res.status(200).json(docs);
+			})
+	} catch (err) {
+		console.error('ERROR FETCHING NOTES');
+		console.error(err.message);
+		res.status(500).json({ message: 'Failed to load notes.' });
+	}
 })
 
 
