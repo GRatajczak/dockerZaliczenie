@@ -1,38 +1,46 @@
 <template>
   <div id="app">
-    <Header/>
+    <BaseHeader/>
     <router-view/>
+    <BaseFooter/>
   </div>
 </template>
 <script>
-  import Header from "../components/";
+import BaseHeader from './components/BaseHeader'
+import BaseFooter from './components/BaseFooter'
 
-  export default {
-    name: "App",
-    components: {
-      Header,
-    }
+export default {
+  name: 'App',
+  components: {
+    BaseHeader,
+    BaseFooter
   }
+}
 </script>
 <style lang="scss">
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+  background: #f7f7f7;
+}
+body {
+  padding-top: 90px;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
 }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+a {
+  color: #000;
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
   }
 }
 </style>
