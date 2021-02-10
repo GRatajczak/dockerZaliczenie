@@ -1,12 +1,13 @@
 FROM node:14
 
-WORKDIR /app
+WORKDIR /srv/www
 
 ARG DEFAULT_MONGO_URL="mongodb://host.docker.internal:27017/"
 
 COPY package.json .
 
 RUN npm install
+
 
 COPY . .
 

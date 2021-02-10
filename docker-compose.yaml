@@ -1,0 +1,14 @@
+version: '3'
+services:
+  app:
+    build: ./backend
+    ports:
+      - "3001:3001"
+    depends_on: 
+      - "db"
+    restart: on-failure
+  db:
+    image: mongo
+    ports: 
+      - "27017:27017"
+    restart: on-failure
